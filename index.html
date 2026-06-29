@@ -2,70 +2,112 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ARAWINBET</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>ARAWINBET — Премиум букмекерская контора | Ставки на спорт</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root{--bg:#0f111a;--card:#1a1d29;--p:#00e5ff;--t:#fff;--m:#8b92a5;--odd:#2a2e3d;--r:#ff3b30;--g:#34c759}
-        *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
-        body{background:var(--bg);color:var(--t);padding-bottom:70px}
-        header{background:var(--card);padding:15px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;border-bottom:1px solid #2a2e3d}
-        .logo{font-weight:800;font-size:20px;color:var(--p);letter-spacing:1px}
-        .user-info{display:flex;align-items:center;gap:10px;font-size:14px}
-        .bal{background:var(--odd);padding:6px 14px;border-radius:20px;font-weight:600;color:var(--p);cursor:pointer}
-        .tabs{display:flex;background:var(--card);padding:8px;gap:6px;overflow-x:auto;position:sticky;top:54px;z-index:99}
-        .tab{padding:10px 20px;background:var(--odd);border:none;border-radius:50px;color:var(--m);font-weight:600;cursor:pointer;white-space:nowrap;font-size:13px}
-        .tab.on{background:var(--p);color:#000}
-        .sports{display:flex;gap:5px;padding:10px 15px;overflow-x:auto}
-        .sport{padding:7px 14px;background:var(--odd);border:1px solid #333;border-radius:50px;font-weight:600;cursor:pointer;white-space:nowrap;font-size:11px;color:var(--m)}
-        .sport.on{background:var(--p);color:#000;border-color:var(--p)}
-        .section{padding:15px;display:none}.section.on{display:block}
-        .card{background:var(--card);border-radius:12px;padding:15px;margin-bottom:15px;box-shadow:0 4px 6px rgba(0,0,0,.1)}
-        .card.live{border-left:3px solid var(--r)}
-        .ch{display:flex;justify-content:space-between;color:var(--m);font-size:11px;margin-bottom:12px;text-transform:uppercase}
-        .lv{color:var(--r);font-weight:700;animation:pulse 1.5s infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-        .teams{font-size:15px;font-weight:600;margin-bottom:15px;line-height:1.4}
-        .sc{font-size:20px;font-weight:900;color:var(--r);margin-top:2px}
-        .odds{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-        .ob{background:var(--odd);border:1px solid transparent;color:var(--t);padding:10px;border-radius:8px;text-align:center;font-weight:600;cursor:pointer;transition:.2s;display:flex;flex-direction:column;gap:3px}
-        .ob span:first-child{color:var(--m);font-size:11px;font-weight:400}
-        .ob.sel{background:var(--p);color:#000}.ob.sel span{color:#000}
-        .ci{background:var(--card);padding:15px;border-radius:8px;margin-bottom:10px;border-left:4px solid var(--p);position:relative}
-        .ci .rm{position:absolute;top:8px;right:12px;color:var(--r);cursor:pointer;font-size:16px}
-        .total-box{background:var(--card);padding:20px;border-radius:12px;margin-top:20px;text-align:center}
-        .total-box .todds{font-size:24px;font-weight:900;color:var(--p)}
-        .inp{width:100%;padding:12px;background:var(--odd);border:1px solid #333;border-radius:8px;color:var(--t);font-size:15px;text-align:center;margin:10px 0;outline:none}.inp:focus{border-color:var(--p)}
-        .btn{width:100%;padding:14px;border:none;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;margin-top:8px}.btn:active{transform:scale(.97)}
-        .btn-p{background:var(--p);color:#000}.btn-s{background:var(--odd);color:var(--t);border:1px solid #333}
-        .casino-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:15px}
-        .cc{background:var(--card);border-radius:12px;padding:20px;text-align:center;cursor:pointer;border:1px solid #333}.cc:active{border-color:var(--p)}
-        .cc .gi{font-size:40px;margin-bottom:8px}.cc .gn{font-weight:700;font-size:14px}.cc .gd{font-size:11px;color:var(--m)}
-        .bn{position:fixed;bottom:0;left:0;width:100%;background:var(--card);display:flex;justify-content:space-around;padding:8px 0;border-top:1px solid #2a2e3d;padding-bottom:env(safe-area-inset-bottom)}
-        .ni{color:var(--m);display:flex;flex-direction:column;align-items:center;font-size:11px;gap:3px;background:none;border:none;cursor:pointer}.ni.on{color:var(--p)}.ni span{font-size:18px}
-        .badge{background:var(--p);color:#000;border-radius:50%;padding:1px 6px;font-size:10px;font-weight:700;position:absolute;top:0;right:20%;display:none}
-        .game-screen{text-align:center;padding:20px}
-        .game-screen h2{color:var(--p);margin-bottom:15px}
-        .slot-reels{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;background:var(--odd);padding:12px;border-radius:12px;margin:12px 0}
-        .slot-reel{font-size:28px;padding:10px;background:var(--card);border-radius:6px;text-align:center}
-        .crash-display{background:var(--card);border-radius:12px;padding:30px;margin:12px 0;font-size:44px;font-weight:900;color:var(--p)}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{
+            font-family:'Segoe UI',Roboto,'Helvetica Neue',system-ui,sans-serif;
+            background:radial-gradient(circle at 30% 10%,#1a2a32 5%,#0b1117 90%);
+            color:#e0e0e0;line-height:1.5;min-height:100vh;padding-bottom:80px;
+            -webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none
+        }
+        .header{
+            background:rgba(10,15,20,.92);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+            border-bottom:1px solid rgba(255,170,0,.25);position:sticky;top:0;z-index:1000;padding:10px 16px;
+            display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px
+        }
+        .logo-area{display:flex;align-items:center;gap:8px}
+        .logo-icon{font-size:2rem;filter:drop-shadow(0 0 10px #ffb300)}
+        .logo-text{font-size:1.5rem;font-weight:800;letter-spacing:2px;
+            background:linear-gradient(180deg,#ffcc66 0%,#ff9900 80%);
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .bal-badge{background:#1e2e38;padding:8px 16px;border-radius:30px;font-weight:700;font-size:.9rem;
+            border:1px solid rgba(255,170,0,.3);cursor:pointer;color:#ffaa00}
+        .nav-tabs{display:flex;background:rgba(10,15,20,.8);padding:8px;gap:6px;overflow-x:auto;
+            position:sticky;top:56px;z-index:999;border-bottom:1px solid rgba(255,170,0,.2)}
+        .tab{padding:10px 20px;background:#1e2e38;border:none;border-radius:30px;color:#ccc;
+            font-weight:600;cursor:pointer;white-space:nowrap;font-size:13px;transition:.2s}
+        .tab.on{background:linear-gradient(135deg,#ffb300,#ff6a00);color:#000}
+        .tab .live-badge{background:#e63946;color:#fff;padding:2px 8px;border-radius:10px;font-size:10px;margin-left:4px}
+        .sports-bar{display:flex;gap:6px;padding:10px 16px;overflow-x:auto;scrollbar-width:none}
+        .sports-bar::-webkit-scrollbar{display:none}
+        .sport{padding:7px 14px;background:#1e2e38;border:1px solid #2a3b44;border-radius:30px;
+            color:#ccc;font-weight:600;cursor:pointer;white-space:nowrap;font-size:11px;transition:.2s}
+        .sport.on{background:#ff9900;color:#000;border-color:#ff9900}
+        .content{padding:12px 16px}
+        .card{background:#131e26;border-radius:20px;padding:18px;margin-bottom:14px;
+            border:1px solid #2a3b44;transition:.25s}
+        .card.live{border-left:3px solid #e63946}
+        .card:hover{border-color:#ff9900;box-shadow:0 8px 22px rgba(255,153,0,.25)}
+        .ch{display:flex;justify-content:space-between;color:#8899aa;font-size:11px;margin-bottom:10px}
+        .lv{color:#e63946;font-weight:700;animation:pulse 1.5s infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+        .teams{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:15px;margin-bottom:10px}
+        .sc{font-size:22px;font-weight:900;color:#e63946}
+        .odds{display:flex;gap:6px}
+        .ob{flex:1;background:#1e2e38;border:none;color:#fff;font-weight:700;padding:12px 6px;
+            border-radius:12px;text-align:center;cursor:pointer;transition:.2s;font-size:13px}
+        .ob:hover{background:#ff9900;color:#000}.ob.sel{background:#ff9900!important;color:#000!important}
+        .ob .ot{font-size:10px;color:#8899aa;display:block}.ob.sel .ot{color:#000}
+        .coupon-panel{background:#131e26;border-radius:20px;padding:16px;border:1px solid #ff9900;margin-top:12px}
+        .cp-item{background:#1e2e38;padding:12px;border-radius:12px;margin-bottom:8px;font-size:13px;position:relative}
+        .cp-item .rm{position:absolute;top:8px;right:12px;color:#e63946;cursor:pointer;font-size:16px}
+        .btn{width:100%;padding:14px;border:none;border-radius:30px;font-weight:700;font-size:14px;cursor:pointer;margin-top:8px;text-transform:uppercase;letter-spacing:.5px;transition:.2s}
+        .btn:active{transform:scale(.97)}
+        .btn-gold{background:linear-gradient(135deg,#ffb300,#ff6a00);color:#000;box-shadow:0 8px 18px rgba(255,106,0,.5)}
+        .btn-out{background:transparent;border:2px solid #ffaa00;color:#ffaa00}
+        .inp{width:100%;padding:12px;background:#1e2e38;border:1px solid #2a3b44;border-radius:12px;color:#fff;font-size:15px;font-weight:600;text-align:center;outline:none;margin:8px 0}.inp:focus{border-color:#ff9900}
+        .casino-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px}
+        .cc{background:#19242c;border-radius:22px;padding:20px 14px;text-align:center;border:1px solid #33424e;cursor:pointer;transition:.2s}
+        .cc:hover{border-color:#ff9900}.cc:active{transform:scale(.96)}.cc .gi{font-size:44px;margin-bottom:6px}.cc .gn{font-weight:700;font-size:14px}.cc .gd{font-size:10px;color:#8899aa}
+        .game-screen{text-align:center;padding:16px}
+        .game-screen h2{color:#ffaa00;margin-bottom:14px}
+        .slot-reels{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;background:#1e2e38;padding:12px;border-radius:16px;margin:12px 0}
+        .slot-reel{font-size:30px;padding:10px;background:#131e26;border-radius:10px;text-align:center}
+        .crash-display{background:#131e26;border-radius:16px;padding:30px;margin:12px 0;font-size:48px;font-weight:900;color:#ffaa00}
+        .bn{position:fixed;bottom:0;left:0;width:100%;background:rgba(10,15,20,.95);display:flex;justify-content:space-around;padding:8px 0;border-top:1px solid rgba(255,170,0,.3);z-index:300;padding-bottom:env(safe-area-inset-bottom)}
+        .ni{color:#8899aa;display:flex;flex-direction:column;align-items:center;font-size:10px;gap:2px;background:none;border:none;cursor:pointer}.ni.on{color:#ffaa00}.ni span{font-size:18px}
+        .badge{background:#e63946;color:#fff;border-radius:50%;padding:1px 6px;font-size:9px;position:absolute;top:0;right:20%;display:none}
         .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.9);z-index:400;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:.3s}
         .modal.op{opacity:1;visibility:visible}
-        .modal-inner{background:var(--card);border-radius:16px;padding:24px;text-align:center;max-width:320px;width:90%;border:2px solid var(--p)}
-        .modal-inner h3{color:var(--p);margin-bottom:10px}
-        .modal-inner .amt{font-size:30px;font-weight:900;color:var(--g)}
+        .modal-inner{background:#131e26;border-radius:24px;padding:28px;text-align:center;max-width:340px;width:90%;border:2px solid #ff9900}
+        .modal-inner h3{color:#ffaa00;margin-bottom:10px}.modal-inner .amt{font-size:32px;font-weight:900;color:#ffb300}
+        @media(max-width:600px){.logo-text{font-size:1.2rem}.header{padding:8px 12px}}
     </style>
 </head>
 <body>
-<header><div class="logo">ARAWINBET</div><div class="user-info"><div class="bal" onclick="showProfile()">💰 <span id="bal">15000</span> ₽</div></div></header>
-<div class="tabs"><button class="tab on" onclick="tab('line',this)">📊 ЛИНИЯ</button><button class="tab" onclick="tab('live',this)">🔴 LIVE</button><button class="tab" onclick="tab('casino',this)">🎰 КАЗИНО</button></div>
-<div class="sports" id="sportsBar"><button class="sport on" onclick="sport('all',this)">🔥 Все</button><button class="sport" onclick="sport('football',this)">⚽ Футбол</button><button class="sport" onclick="sport('tennis',this)">🎾 Теннис</button><button class="sport" onclick="sport('basketball',this)">🏀 Баскетбол</button><button class="sport" onclick="sport('hockey',this)">🏒 Хоккей</button></div>
+<div class="header">
+    <div class="logo-area"><span class="logo-icon">🦅</span><span class="logo-text">ARAWINBET</span></div>
+    <div class="bal-badge" onclick="showProfile()">💰 <span id="bal">15000</span> $</div>
+</div>
 
-<div id="lineSection" class="section on"><div id="matchContainer"></div></div>
-<div id="betslipSection" class="section"><h2>📋 Купон</h2><div id="betslipItems"><div style="color:var(--m);text-align:center;padding:20px;">Добавьте события</div></div><div class="total-box" id="totalBox" style="display:none"><div style="margin-bottom:8px;">Общий кэф: <span class="todds" id="totalOdd">1.00</span></div><input type="number" id="stake" value="500" min="10" class="inp" placeholder="Сумма ставки"><div style="margin:8px 0;">Выигрыш: <b id="winAmount" style="color:var(--p);">500 ₽</b></div><button class="btn btn-p" onclick="placeBet()">🎯 СДЕЛАТЬ СТАВКУ</button><button class="btn btn-s" onclick="clearSlip()">🗑 Очистить</button></div></div>
-<div id="casinoSection" class="section"><div class="casino-grid"><div class="cc" onclick="openSlots()"><div class="gi">🎰</div><div class="gn">Слоты</div><div class="gd">5x3 • RTP 96%</div></div><div class="cc" onclick="openCrash()"><div class="gi">🚀</div><div class="gn">ARA Crash</div><div class="gd">До x1000</div></div><div class="cc" onclick="openRoulette()"><div class="gi">🎡</div><div class="gn">Рулетка</div><div class="gd">RTP 97%</div></div><div class="cc" onclick="openBlackjack()"><div class="gi">🃏</div><div class="gn">Блэкджек</div><div class="gd">RTP 99%</div></div></div></div>
+<div class="nav-tabs">
+    <button class="tab on" onclick="tab('line',this)">⚽ ЛИНИЯ</button>
+    <button class="tab" onclick="tab('live',this)">🔴 LIVE <span class="live-badge">8</span></button>
+    <button class="tab" onclick="tab('casino',this)">🎰 КАЗИНО</button>
+    <button class="tab" onclick="tab('coupon',this)">🎟️ КУПОН</button>
+</div>
 
-<div class="bn"><button class="ni on" onclick="tab('line')"><span>⚽</span>Линия</button><button class="ni" style="position:relative;" onclick="tab('betslip')"><span>🎟️</span>Купон<span class="badge" id="cpBadge">0</span></button><button class="ni" onclick="tab('casino')"><span>🎰</span>Казино</button><button class="ni" onclick="showProfile()"><span>👤</span>Профиль</button></div>
-<div class="modal" id="winModal"><div class="modal-inner"><h3>✅ СТАВКА ПРИНЯТА!</h3><div class="amt" id="modalAmt"></div><p style="color:var(--m);margin:8px 0;" id="modalInfo"></p><button class="btn btn-p" onclick="$('winModal').classList.remove('op')">ОК</button></div></div>
+<div class="sports-bar" id="sportsBar">
+    <button class="sport on" onclick="sport('all',this)">🔥 Все</button>
+    <button class="sport" onclick="sport('football',this)">⚽ Футбол</button>
+    <button class="sport" onclick="sport('tennis',this)">🎾 Теннис</button>
+    <button class="sport" onclick="sport('basketball',this)">🏀 Баскетбол</button>
+    <button class="sport" onclick="sport('hockey',this)">🏒 Хоккей</button>
+</div>
+
+<div class="content" id="content"></div>
+
+<div class="bn">
+    <button class="ni on" onclick="tab('line')"><span>⚽</span>Линия</button>
+    <button class="ni" onclick="tab('live')"><span>🔴</span>LIVE</button>
+    <button class="ni" onclick="tab('casino')"><span>🎰</span>Казино</button>
+    <button class="ni" onclick="tab('coupon')" style="position:relative;"><span>🎟️</span>Купон<span class="badge" id="cpBadge">0</span></button>
+    <button class="ni" onclick="showProfile()"><span>👤</span>Профиль</button>
+</div>
+
+<div class="modal" id="winModal"><div class="modal-inner"><h3>✅ СТАВКА ПРИНЯТА!</h3><div class="amt" id="modalAmt"></div><p style="color:#8899aa;margin:8px 0;" id="modalInfo"></p><button class="btn btn-gold" onclick="$('winModal').classList.remove('op')">ОК</button></div></div>
 
 <script>
 const tg=window.Telegram.WebApp;tg.ready();tg.expand();
@@ -73,66 +115,55 @@ const $=id=>document.getElementById(id);
 const f=n=>Number(n||0).toLocaleString('ru-RU');
 const M=[{id:1,s:'football',lg:'Лига Чемпионов',t1:'Реал Мадрид',t2:'Ман Сити',tm:'22:00',live:true,sc:[2,1],min:68,od:{w1:2.45,x:3.40,w2:2.80}},{id:2,s:'football',lg:'Лига Чемпионов',t1:'Арсенал',t2:'Бавария',tm:'22:00',live:true,sc:[1,1],min:55,od:{w1:2.10,x:3.50,w2:3.20}},{id:3,s:'football',lg:'АПЛ',t1:'Ливерпуль',t2:'Кристал Пэлас',tm:'17:00',live:false,od:{w1:1.22,x:6.50,w2:11.0}},{id:4,s:'football',lg:'АПЛ',t1:'Ман Юнайтед',t2:'Ньюкасл',tm:'19:30',live:true,sc:[0,1],min:34,od:{w1:2.80,x:3.50,w2:2.30}},{id:5,s:'football',lg:'АПЛ',t1:'Челси',t2:'Эвертон',tm:'22:00',live:false,od:{w1:1.70,x:3.80,w2:4.50}},{id:6,s:'football',lg:'Ла Лига',t1:'Барселона',t2:'Кадис',tm:'22:00',live:false,od:{w1:1.18,x:7.00,w2:14.0}},{id:7,s:'football',lg:'Серия А',t1:'Интер',t2:'Кальяри',tm:'21:45',live:true,sc:[2,0],min:61,od:{w1:1.15,x:7.50,w2:17.0}},{id:8,s:'football',lg:'Серия А',t1:'Милан',t2:'Лечче',tm:'16:00',live:false,od:{w1:1.55,x:4.00,w2:5.20}},{id:9,s:'football',lg:'Бундеслига',t1:'Байер',t2:'Вердер',tm:'19:30',live:true,sc:[3,0],min:72,od:{w1:1.08,x:9.00,w2:23.0}},{id:10,s:'football',lg:'РПЛ',t1:'Зенит',t2:'Краснодар',tm:'19:00',live:true,sc:[1,0],min:44,od:{w1:1.50,x:4.00,w2:5.50}},{id:11,s:'football',lg:'РПЛ',t1:'Спартак',t2:'ЦСКА',tm:'16:30',live:false,od:{w1:2.50,x:3.10,w2:2.70}},{id:12,s:'tennis',lg:'ATP Тур',t1:'Я. Синнер',t2:'Н. Джокович',tm:'16:00',live:true,sc:[1,0],od:{w1:1.85,w2:1.95}},{id:13,s:'tennis',lg:'WTA Тур',t1:'И. Швёнтек',t2:'А. Соболенко',tm:'14:00',live:false,od:{w1:1.55,w2:2.40}},{id:14,s:'basketball',lg:'НБА',t1:'Лейкерс',t2:'Селтикс',tm:'05:30',live:false,od:{w1:2.10,w2:1.70}},{id:15,s:'basketball',lg:'НБА',t1:'Голден Стэйт',t2:'Милуоки',tm:'03:00',live:true,sc:[98,102],min:42,od:{w1:1.90,w2:1.85}},{id:16,s:'hockey',lg:'НХЛ',t1:'Тампа-Бэй',t2:'Рейнджерс',tm:'03:00',live:false,od:{w1:1.85,x:4.00,w2:3.20}},{id:17,s:'hockey',lg:'КХЛ',t1:'СКА',t2:'Ак Барс',tm:'19:30',live:true,sc:[3,2],min:52,od:{w1:1.50,x:4.50,w2:5.50}}];
 let bal=15000,slip=[],ctab='line',csport='all';
-document.addEventListener('DOMContentLoaded',()=>{updBal();renderMatches();updSlip();});
+document.addEventListener('DOMContentLoaded',()=>{updBal();renderMatches();});
 function updBal(){$('bal').textContent=f(bal);}
 function tab(t,el){
     ctab=t;
-    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
-    if(el)el.classList.add('on');
-    document.querySelectorAll('.ni').forEach((x,i)=>{x.classList.remove('on');if((t==='line'&&i===0)||(t==='betslip'&&i===1)||(t==='casino'&&i===2))x.classList.add('on');});
-    document.querySelectorAll('.section').forEach(x=>x.classList.remove('on'));
-    if(t==='line'){$('lineSection').classList.add('on');$('sportsBar').style.display='flex';}
-    else if(t==='betslip'){$('betslipSection').classList.add('on');$('sportsBar').style.display='none';}
-    else if(t==='casino'){$('casinoSection').classList.add('on');$('sportsBar').style.display='none';}
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));if(el)el.classList.add('on');
+    document.querySelectorAll('.ni').forEach((x,i)=>{x.classList.remove('on');const map={line:0,live:1,casino:2,coupon:3};if(map[t]===i)x.classList.add('on');});
+    if(t==='casino')renderCasino();else if(t==='coupon')renderCouponPage();else{$('sportsBar').style.display='flex';renderMatches();}
 }
 function sport(s,el){csport=s;document.querySelectorAll('.sport').forEach(x=>x.classList.remove('on'));el.classList.add('on');renderMatches();}
 function renderMatches(){
-    let m=ctab==='live'?M.filter(x=>x.live):M;
-    if(csport!=='all')m=m.filter(x=>x.s===csport);
-    const c=$('matchContainer');
-    if(!m.length){c.innerHTML='<div style="text-align:center;padding:40px;color:var(--m);">Нет матчей</div>';return;}
+    let m=ctab==='live'?M.filter(x=>x.live):M;if(csport!=='all')m=m.filter(x=>x.s===csport);
+    const c=$('content');if(!m.length){c.innerHTML='<div style="text-align:center;padding:40px;color:#8899aa;">Нет матчей</div>';return;}
     let h='';m.forEach(x=>{
         const ti=x.live?`<span class="lv">🔴 LIVE ${x.min}'</span>`:`🕐 ${x.tm}`;
         const s1=x.live&&x.sc?`<div class="sc">${x.sc[0]}</div>`:'';const s2=x.live&&x.sc?`<div class="sc">${x.sc[1]}</div>`:'';
-        const xb=x.od.x?`<div class="ob" data-id="${x.id}" data-tp="x" data-od="${x.od.x}" data-nm="X" onclick="togBet(this)"><span>X</span>${x.od.x}</div>`:'';
-        h+=`<div class="card ${x.live?'live':''}"><div class="ch"><span>${x.lg}</span>${ti}</div><div class="teams">${x.t1}${s1}<br>${x.t2}${s2}</div><div class="odds"><div class="ob" data-id="${x.id}" data-tp="w1" data-od="${x.od.w1}" data-nm="П1" onclick="togBet(this)"><span>П1</span>${x.od.w1}</div>${xb}<div class="ob" data-id="${x.id}" data-tp="w2" data-od="${x.od.w2||x.od.w1}" data-nm="П2" onclick="togBet(this)"><span>П2</span>${x.od.w2||x.od.w1}</div></div></div>`;});c.innerHTML=h;hilite();}
+        const xb=x.od.x?`<div class="ob" data-id="${x.id}" data-tp="x" data-od="${x.od.x}" data-nm="X" onclick="togBet(this)"><span class="ot">X</span>${x.od.x}</div>`:'';
+        h+=`<div class="card ${x.live?'live':''}"><div class="ch"><span>${x.lg}</span>${ti}</div><div class="teams"><span>${x.t1}${s1}</span><span style="color:#8899aa;">VS</span><span>${x.t2}${s2}</span></div><div class="odds"><div class="ob" data-id="${x.id}" data-tp="w1" data-od="${x.od.w1}" data-nm="П1" onclick="togBet(this)"><span class="ot">П1</span>${x.od.w1}</div>${xb}<div class="ob" data-id="${x.id}" data-tp="w2" data-od="${x.od.w2||x.od.w1}" data-nm="П2" onclick="togBet(this)"><span class="ot">П2</span>${x.od.w2||x.od.w1}</div></div></div>`;});c.innerHTML=h;hilite();}
 function togBet(el){const id=parseInt(el.dataset.id),tp=el.dataset.tp,od=parseFloat(el.dataset.od),nm=el.dataset.nm;const m=M.find(x=>x.id===id);if(!m)return;const idx=slip.findIndex(b=>b.id===id&&b.tp===tp);if(idx>=0){slip.splice(idx,1);}else{slip.push({id,tp,od,nm,mn:`${m.t1} vs ${m.t2}`,lg:m.lg});}updSlip();hilite();}
-function updSlip(){
-    const ci=$('betslipItems'),tb=$('totalBox'),badge=$('cpBadge');
-    badge.textContent=slip.length;badge.style.display=slip.length?'block':'none';
-    if(!slip.length){ci.innerHTML='<div style="color:var(--m);text-align:center;padding:20px;">Добавьте события</div>';tb.style.display='none';return;}
-    tb.style.display='block';let h='',tc=1;slip.forEach((b,i)=>{tc*=b.od;h+=`<div class="ci"><span class="rm" onclick="rmSlip(${i})">✕</span><div style="font-weight:700;">${b.mn}</div><div style="display:flex;justify-content:space-between;color:var(--p);margin-top:4px;">${b.nm} @ ${b.od}</div></div>`;});
-    ci.innerHTML=h;$('totalOdd').textContent=tc.toFixed(2);const stk=parseFloat($('stake')?.value)||500;$('winAmount').textContent=f(Math.round(stk*tc))+' ₽';}
-function rmSlip(i){slip.splice(i,1);updSlip();hilite();}
-function clearSlip(){slip=[];updSlip();hilite();}
+function updSlip(){$('cpBadge').textContent=slip.length;$('cpBadge').style.display=slip.length?'block':'none';}
 function hilite(){document.querySelectorAll('.ob').forEach(b=>b.classList.remove('sel'));slip.forEach(b=>{document.querySelectorAll(`.ob[data-id="${b.id}"][data-tp="${b.tp}"]`).forEach(el=>el.classList.add('sel'));});}
+function renderCouponPage(){
+    $('sportsBar').style.display='none';const c=$('content');
+    if(!slip.length){c.innerHTML='<div class="card" style="text-align:center;padding:40px;"><p style="color:#8899aa;">Купон пуст</p><p style="color:#ffaa00;margin-top:10px;">Добавьте события из Линии или LIVE</p></div>';return;}
+    let h='<h2 style="color:#ffaa00;margin-bottom:12px;">🎟️ ВАШ КУПОН</h2>',tc=1;slip.forEach((b,i)=>{tc*=b.od;h+=`<div class="cp-item"><span class="rm" onclick="rmSlip(${i})">✕</span><div style="font-weight:700;">${b.mn}</div><div style="color:#ffaa00;margin-top:4px;">${b.nm} @ ${b.od}</div></div>`;});
+    h+=`<div class="coupon-panel"><div style="text-align:center;font-size:18px;">Общий кэф: <b style="color:#ffaa00;">${tc.toFixed(2)}</b></div><input type="number" id="stk" value="500" min="10" class="inp" placeholder="Сумма ставки"><div style="text-align:center;">Выигрыш: <b id="winAmt" style="color:#ffb300;">${f(Math.round(500*tc))} $</b></div><button class="btn btn-gold" onclick="placeBet()">🎯 СДЕЛАТЬ СТАВКУ</button><button class="btn btn-out" onclick="clearSlip()">🗑 Очистить купон</button></div>`;c.innerHTML=h;}
+function rmSlip(i){slip.splice(i,1);updSlip();renderCouponPage();hilite();}
+function clearSlip(){slip=[];updSlip();renderCouponPage();hilite();}
 function placeBet(){
-    if(!slip.length){tg.showAlert('Добавьте события!');return;}
-    const stk=parseFloat($('stake')?.value)||500;if(stk<10){tg.showAlert('Мин: 10 ₽');return;}
-    if(stk>bal){tg.showAlert('Недостаточно средств!');return;}
-    const tc=slip.reduce((a,b)=>a*b.od,1);bal-=stk;updBal();
-    const wa=f(Math.round(stk*tc));$('modalAmt').textContent=wa+' ₽';$('modalInfo').textContent=slip.length+' событий • Кэф '+tc.toFixed(2);$('winModal').classList.add('op');
-    slip=[];updSlip();hilite();
+    if(!slip.length){tg.showAlert('Добавьте события!');return;}const stk=parseFloat($('stk')?.value)||500;
+    if(stk<10){tg.showAlert('Мин: 10 $');return;}if(stk>bal){tg.showAlert('Недостаточно средств!');return;}
+    const tc=slip.reduce((a,b)=>a*b.od,1);bal-=stk;updBal();const wa=f(Math.round(stk*tc));
+    $('modalAmt').textContent=wa+' $';$('modalInfo').textContent=slip.length+' событий • Кэф '+tc.toFixed(2);$('winModal').classList.add('op');
+    slip=[];updSlip();hilite();if(ctab==='coupon')renderCouponPage();else renderMatches();
 }
-function showProfile(){tg.showAlert('👑 ARAWINBET\n@romqa68\nID: 1458632670\nБаланс: '+f(bal)+' ₽\n\n💳 Пополнение/вывод:\n@romqa68');}
-document.addEventListener('input',e=>{if(e.target.id==='stake')updSlip();});
+function showProfile(){tg.showAlert('👑 ARAWINBET\n@romqa68\nID: 1458632670\nБаланс: '+f(bal)+' $\n\n💳 Пополнение/вывод:\n@romqa68');}
+document.addEventListener('input',e=>{if(e.target.id==='stk'){const tc=slip.reduce((a,b)=>a*b.od,1);$('winAmt').textContent=f(Math.round((parseFloat(e.target.value)||500)*tc))+' $';}});
 
 // КАЗИНО
-function openSlots(){
-    $('casinoSection').innerHTML=`<div class="game-screen"><button onclick="tab('casino')" style="background:none;border:none;color:var(--p);cursor:pointer;font-size:16px;display:block;margin-bottom:10px;">← Назад</button><h2>🎰 СЛОТЫ</h2><div class="slot-reels" id="slotReels"><div class="slot-reel">🍒</div><div class="slot-reel">🍋</div><div class="slot-reel">🍊</div><div class="slot-reel">🍇</div><div class="slot-reel">💎</div></div><div style="display:flex;gap:8px;align-items:center;margin:10px 0;"><input type="number" id="slotBet" value="10" min="5" class="inp" style="margin:0;"></div><button class="btn btn-p" onclick="spinSlots()">🎰 КРУТИТЬ</button><p id="slotRes" style="margin-top:10px;font-weight:700;"></p></div>`;
-}
-function spinSlots(){const bet=parseInt($('slotBet')?.value)||10;if(bet>bal){tg.showAlert('Недостаточно средств!');return;}bal-=bet;updBal();const syms=['🍒','🍋','🍊','🍇','💎','7️⃣','⭐'];const reels=document.querySelectorAll('.slot-reel');let spins=0;const int=setInterval(()=>{reels.forEach(r=>r.textContent=syms[Math.floor(Math.random()*syms.length)]);spins++;if(spins>=10){clearInterval(int);const r=[syms[Math.floor(Math.random()*syms.length)],syms[Math.floor(Math.random()*syms.length)],syms[Math.floor(Math.random()*syms.length)],syms[Math.floor(Math.random()*syms.length)],syms[Math.floor(Math.random()*syms.length)]];reels[0].textContent=r[0];reels[1].textContent=r[1];reels[2].textContent=r[2];reels[3].textContent=r[3];reels[4].textContent=r[4];const w=r[0]===r[1]&&r[1]===r[2]?bet*10:r[0]===r[1]?bet*2:0;if(w>0){bal+=w;updBal();$('slotRes').innerHTML='<span style="color:var(--g);">🎉 +'+w+' ₽!</span>';}else{$('slotRes').innerHTML='<span style="color:var(--m);">Попробуй ещё!</span>';}}},80);}
-function openCrash(){
-    $('casinoSection').innerHTML=`<div class="game-screen"><button onclick="tab('casino')" style="background:none;border:none;color:var(--p);cursor:pointer;font-size:16px;display:block;margin-bottom:10px;">← Назад</button><h2>🚀 ARA CRASH</h2><div class="crash-display" id="crashMult">1.00x</div><input type="number" id="crashBet" value="50" min="10" class="inp"><button class="btn btn-p" id="crashBtn" onclick="startCrash()">🚀 СТАВКА</button><button class="btn btn-s" id="crashCash" onclick="cashCrash()" style="display:none;background:var(--r);">💰 ЗАБРАТЬ</button></div>`;}
+function renderCasino(){$('sportsBar').style.display='none';$('content').innerHTML=`<h2 style="color:#ffaa00;margin-bottom:12px;">🎰 ARAWIN КАЗИНО</h2><div class="casino-grid"><div class="cc" onclick="openSlots()"><div class="gi">🎰</div><div class="gn">Слоты</div><div class="gd">5x3 • RTP 96%</div></div><div class="cc" onclick="openCrash()"><div class="gi">🚀</div><div class="gn">ARA Crash</div><div class="gd">До x1000</div></div><div class="cc" onclick="openRoulette()"><div class="gi">🎡</div><div class="gn">Рулетка</div><div class="gd">RTP 97%</div></div><div class="cc" onclick="openBlackjack()"><div class="gi">🃏</div><div class="gn">Блэкджек</div><div class="gd">RTP 99%</div></div></div>`;}
+function openSlots(){$('content').innerHTML=`<div class="game-screen"><button onclick="tab('casino')" style="background:none;border:none;color:#ffaa00;cursor:pointer;font-size:16px;display:block;margin-bottom:10px;">← Назад</button><h2>🎰 СЛОТЫ</h2><div class="slot-reels"><div class="slot-reel">🍒</div><div class="slot-reel">🍋</div><div class="slot-reel">🍊</div><div class="slot-reel">🍇</div><div class="slot-reel">💎</div></div><input type="number" id="slotBet" value="10" min="5" class="inp"><button class="btn btn-gold" onclick="spinSlots()">🎰 КРУТИТЬ</button><p id="slotRes" style="margin-top:10px;font-weight:700;"></p></div>`;}
+function spinSlots(){const bet=parseInt($('slotBet')?.value)||10;if(bet>bal){tg.showAlert('Недостаточно средств!');return;}bal-=bet;updBal();const syms=['🍒','🍋','🍊','🍇','💎','7️⃣','⭐'];const reels=document.querySelectorAll('.slot-reel');let spins=0;const int=setInterval(()=>{reels.forEach(r=>r.textContent=syms[Math.floor(Math.random()*syms.length)]);spins++;if(spins>=10){clearInterval(int);const r=[syms[Math.floor(Math.random()*syms.length)],syms[Math.floor(Math.random()*syms.length)],syms[Math.floor(Math.random()*syms.length)],syms[Math.floor(Math.random()*syms.length)],syms[Math.floor(Math.random()*syms.length)]];reels[0].textContent=r[0];reels[1].textContent=r[1];reels[2].textContent=r[2];reels[3].textContent=r[3];reels[4].textContent=r[4];const w=r[0]===r[1]&&r[1]===r[2]?bet*10:r[0]===r[1]?bet*2:0;if(w>0){bal+=w;updBal();$('slotRes').innerHTML='<span style="color:#ffaa00;">🎉 +'+w+' $!</span>';}else{$('slotRes').innerHTML='<span style="color:#8899aa;">Попробуй ещё!</span>';}}},80);}
+function openCrash(){$('content').innerHTML=`<div class="game-screen"><button onclick="tab('casino')" style="background:none;border:none;color:#ffaa00;cursor:pointer;font-size:16px;display:block;margin-bottom:10px;">← Назад</button><h2>🚀 ARA CRASH</h2><div class="crash-display" id="crashMult">1.00x</div><input type="number" id="crashBet" value="50" min="10" class="inp"><button class="btn btn-gold" id="crashBtn" onclick="startCrash()">🚀 СТАВКА</button><button class="btn btn-out" id="crashCash" onclick="cashCrash()" style="display:none;">💰 ЗАБРАТЬ</button></div>`;}
 let ca=false,cm=1,cb=0,ci=null;
-function startCrash(){cb=parseInt($('crashBet')?.value)||50;if(cb>bal){tg.showAlert('Недостаточно средств!');return;}bal-=cb;updBal();ca=true;cm=1;$('crashBtn').style.display='none';$('crashCash').style.display='block';const cp=1+Math.random()*15;ci=setInterval(()=>{cm+=0.05;$('crashMult').textContent=cm.toFixed(2)+'x';if(cm>=cp){clearInterval(ci);ca=false;$('crashMult').textContent='💥 КРАШ!';$('crashMult').style.color=var(--r);$('crashBtn').style.display='block';$('crashCash').style.display='none';setTimeout(()=>{$('crashMult').textContent='1.00x';$('crashMult').style.color='var(--p)';},2000);}},80);}
-function cashCrash(){if(!ca)return;clearInterval(ci);ca=false;const w=Math.round(cb*cm);bal+=w;updBal();tg.showAlert('🚀 ЗАБРАЛ НА '+cm.toFixed(2)+'x!\n+'+w+' ₽');$('crashBtn').style.display='block';$('crashCash').style.display='none';$('crashMult').textContent='1.00x';}
-function openRoulette(){
-    $('casinoSection').innerHTML=`<div class="game-screen"><button onclick="tab('casino')" style="background:none;border:none;color:var(--p);cursor:pointer;font-size:16px;display:block;margin-bottom:10px;">← Назад</button><h2>🎡 РУЛЕТКА</h2><div style="font-size:60px;margin:15px 0;" id="roulW">🎡</div><input type="number" id="roulBet" value="50" min="10" class="inp"><button class="btn btn-p" onclick="spinRoul('red')">🔴 Красное x2</button><button class="btn btn-p" onclick="spinRoul('black')" style="margin-top:4px;">⚫ Чёрное x2</button><p id="roulRes" style="margin-top:10px;font-weight:700;"></p></div>`;}
-function spinRoul(t){const b=parseInt($('roulBet')?.value)||50;if(b>bal){tg.showAlert('Недостаточно средств!');return;}bal-=b;updBal();const n=Math.floor(Math.random()*37);const red=[1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36];const c=n===0?'green':red.includes(n)?'red':'black';$('roulW').textContent=n===0?'🟢':c==='red'?'🔴':'⚫';const won=(t==='red'&&c==='red')||(t==='black'&&c==='black');if(won){const w=b*2;bal+=w;updBal();$('roulRes').innerHTML='<span style="color:var(--g);">🎉 +'+w+' ₽!</span>';}else{$('roulRes').innerHTML='<span style="color:var(--m);">Не повезло</span>';}}
-function openBlackjack(){
-    $('casinoSection').innerHTML=`<div class="game-screen"><button onclick="tab('casino')" style="background:none;border:none;color:var(--p);cursor:pointer;font-size:16px;display:block;margin-bottom:10px;">← Назад</button><h2>🃏 БЛЭКДЖЕК</h2><div style="margin:12px 0;font-size:14px;" id="bjA"><p>Дилер: ?</p><p>Вы: ?</p></div><input type="number" id="bjBet" value="25" min="10" class="inp"><button class="btn btn-p" onclick="dealBJ()">🎮 СДАТЬ</button><p id="bjRes" style="margin-top:10px;font-weight:700;"></p></div>`;}
-function dealBJ(){const b=parseInt($('bjBet')?.value)||25;if(b>bal){tg.showAlert('Недостаточно средств!');return;}bal-=b;updBal();const ps=Math.floor(Math.random()*11)+14,ds=Math.floor(Math.random()*11)+14;$('bjA').innerHTML=`<p>Дилер: <b>${ds}</b>${ds>21?' 💥':''}</p><p>Вы: <b>${ps}</b>${ps>21?' 💥':''}</p>`;let r='',w=0;if(ps>21)r='💔 Перебор!';else if(ds>21){r='🎉 Выигрыш!';w=b*2;}else if(ps>ds){r='🏆 Выигрыш!';w=b*2;}else if(ps===ds){r='🤝 Ничья';w=b;}else r='💔 Поражение';if(w>0){bal+=w;updBal();}$('bjRes').innerHTML=w>0?`<span style="color:var(--g);">${r} +${w} ₽</span>`:`<span style="color:var(--m);">${r}</span>`;}
+function startCrash(){cb=parseInt($('crashBet')?.value)||50;if(cb>bal){tg.showAlert('Недостаточно средств!');return;}bal-=cb;updBal();ca=true;cm=1;$('crashBtn').style.display='none';$('crashCash').style.display='block';const cp=1+Math.random()*15;ci=setInterval(()=>{cm+=0.05;$('crashMult').textContent=cm.toFixed(2)+'x';if(cm>=cp){clearInterval(ci);ca=false;$('crashMult').textContent='💥 КРАШ!';$('crashBtn').style.display='block';$('crashCash').style.display='none';setTimeout(()=>{$('crashMult').textContent='1.00x';},2000);}},80);}
+function cashCrash(){if(!ca)return;clearInterval(ci);ca=false;const w=Math.round(cb*cm);bal+=w;updBal();tg.showAlert('🚀 ЗАБРАЛ НА '+cm.toFixed(2)+'x!\n+'+w+' $');$('crashBtn').style.display='block';$('crashCash').style.display='none';$('crashMult').textContent='1.00x';}
+function openRoulette(){$('content').innerHTML=`<div class="game-screen"><button onclick="tab('casino')" style="background:none;border:none;color:#ffaa00;cursor:pointer;font-size:16px;display:block;margin-bottom:10px;">← Назад</button><h2>🎡 РУЛЕТКА</h2><div style="font-size:60px;margin:15px 0;" id="roulW">🎡</div><input type="number" id="roulBet" value="50" min="10" class="inp"><button class="btn btn-gold" onclick="spinRoul('red')">🔴 Красное x2</button><button class="btn btn-gold" onclick="spinRoul('black')" style="margin-top:4px;">⚫ Чёрное x2</button><p id="roulRes" style="margin-top:10px;"></p></div>`;}
+function spinRoul(t){const b=parseInt($('roulBet')?.value)||50;if(b>bal){tg.showAlert('Недостаточно средств!');return;}bal-=b;updBal();const n=Math.floor(Math.random()*37);const red=[1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36];const c=n===0?'green':red.includes(n)?'red':'black';$('roulW').textContent=n===0?'🟢':c==='red'?'🔴':'⚫';const won=(t==='red'&&c==='red')||(t==='black'&&c==='black');if(won){const w=b*2;bal+=w;updBal();$('roulRes').innerHTML='<span style="color:#ffaa00;">🎉 +'+w+' $!</span>';}else{$('roulRes').innerHTML='<span style="color:#8899aa;">Не повезло</span>';}}
+function openBlackjack(){$('content').innerHTML=`<div class="game-screen"><button onclick="tab('casino')" style="background:none;border:none;color:#ffaa00;cursor:pointer;font-size:16px;display:block;margin-bottom:10px;">← Назад</button><h2>🃏 БЛЭКДЖЕК</h2><div style="margin:12px 0;" id="bjA"><p>Дилер: ?</p><p>Вы: ?</p></div><input type="number" id="bjBet" value="25" min="10" class="inp"><button class="btn btn-gold" onclick="dealBJ()">🎮 СДАТЬ</button><p id="bjRes" style="margin-top:10px;"></p></div>`;}
+function dealBJ(){const b=parseInt($('bjBet')?.value)||25;if(b>bal){tg.showAlert('Недостаточно средств!');return;}bal-=b;updBal();const ps=Math.floor(Math.random()*11)+14,ds=Math.floor(Math.random()*11)+14;$('bjA').innerHTML=`<p>Дилер: <b>${ds}</b>${ds>21?' 💥':''}</p><p>Вы: <b>${ps}</b>${ps>21?' 💥':''}</p>`;let r='',w=0;if(ps>21)r='💔 Перебор!';else if(ds>21){r='🎉 Выигрыш!';w=b*2;}else if(ps>ds){r='🏆 Выигрыш!';w=b*2;}else if(ps===ds){r='🤝 Ничья';w=b;}else r='💔 Поражение';if(w>0){bal+=w;updBal();}$('bjRes').innerHTML=w>0?`<span style="color:#ffaa00;">${r} +${w} $</span>`:`<span style="color:#8899aa;">${r}</span>`;}
 </script>
 </body>
 </html>
